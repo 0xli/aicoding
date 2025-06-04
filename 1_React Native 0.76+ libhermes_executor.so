@@ -1,0 +1,23 @@
+Some problem is small but you still not fix it after spending many time on #cursor or #chatgpt, it turned out to be a
+#AI_not_solved_programming_problem, like this, when I upgrade my React Native version from 0.73.0 to 0.79.2, my native App written in java :
+java.lang.UnsatisfiedLinkError: dlopen failed: library "libhermes_executor.so" not found at 
+
+but if you not reply on AI and get help from old friends from google, you can solve it within 30 minutes:
+https://stackoverflow.com/questions/79202457/react-native-dlopen-failed-library-libhermes-executor-so-not-found-hermes-e
+
+https://reactnative.dev/blog/2024/10/23/release-0.76-new-architecture
+
+https://reactnative.dev/blog/2024/10/23/release-0.76-new-architecture#android-apps-are-38mb-smaller-thanks-to-native-library-merging
+
+this fix is this:
++import com.facebook.react.soloader.OpenSourceMergedSoMapping
+import com.facebook.soloader.SoLoader
+
+class MainApplication : Application(), ReactApplication {
+
+  override fun onCreate() {
+    super.onCreate()
++   SoLoader.init(this, OpenSourceMergedSoMapping)
+-   SoLoader.init(this, false)
+  }
+}
